@@ -17,7 +17,7 @@ body{
     transition:filter 0.8s ease, opacity 0.8s ease;
 }
 
-/* Romantic pulse background */
+/* Romantic pulse */
 body.romantic{
     animation:heartbeat 2.5s infinite;
 }
@@ -26,7 +26,7 @@ body.romantic{
     50%{filter:brightness(1.1);}
 }
 
-/* 🌙 Moon */
+/* Moon */
 .moon{
     position:absolute;
     top:60px;
@@ -56,7 +56,7 @@ body.romantic{
     to{opacity:1;}
 }
 
-/* 💖 Advanced Hearts */
+/* Hearts */
 .heart{
     position:fixed;
     top:-20px;
@@ -70,7 +70,7 @@ body.romantic{
     }
 }
 
-/* ✨ Sparkles */
+/* Sparkles */
 .sparkle{
     position:fixed;
     width:6px;
@@ -197,7 +197,6 @@ button:hover{ transform:scale(1.1); }
     <button onclick="startCake()">CAKE🎂</button>
 </div>
 
-<!-- Modal -->
 <div class="modal" id="modal">
   <div class="envelope-wrapper" onclick="openEnvelope(event)">
     <div class="envelope">
@@ -209,12 +208,10 @@ button:hover{ transform:scale(1.1); }
   </div>
 </div>
 
-<!-- Letter Music -->
 <audio id="letterMusic" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a0f0c7d3.mp3?filename=soft-piano-ambient-110624.mp3">
 </audio>
 
-<!-- Cake Music -->
 <audio id="cakeMusic">
 <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_0f5df6c4a2.mp3?filename=happy-birthday-112194.mp3">
 </audio>
@@ -231,25 +228,21 @@ for(let i=0;i<150;i++){
     document.body.appendChild(star);
 }
 
-/* Advanced Hearts */
+/* Hearts */
 let heartInterval;
 function startHearts(){
     heartInterval=setInterval(()=>{
         const heart=document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML="💖";
-        const size=15+Math.random()*25;
-        heart.style.fontSize=size+"px";
+        heart.style.fontSize=(15+Math.random()*25)+"px";
         heart.style.left=Math.random()*100+"vw";
         heart.style.animationDuration=(4+Math.random()*4)+"s";
-        heart.style.opacity=Math.random();
         document.body.appendChild(heart);
         setTimeout(()=>heart.remove(),8000);
     },250);
 }
-function stopHearts(){
-    clearInterval(heartInterval);
-}
+function stopHearts(){ clearInterval(heartInterval); }
 
 /* Sparkles */
 setInterval(()=>{
@@ -261,23 +254,39 @@ setInterval(()=>{
     setTimeout(()=>sp.remove(),4000);
 },500);
 
-/* Envelope */
+/* Show Envelope */
 function showEnvelope(){
-    const modal=document.getElementById("modal");
-    modal.classList.add("show");
+    document.getElementById("modal").classList.add("show");
     document.body.classList.add("romantic");
-
     const music=document.getElementById("letterMusic");
     music.volume=0.4;
     music.play().catch(()=>{});
-
     startHearts();
 }
 
+/* Open Envelope + TYPE MESSAGE */
 function openEnvelope(e){
     e.stopPropagation();
-    document.getElementById("flap").style.transform="rotateX(180deg)";
-    document.getElementById("letter").style.transform="translateY(-40px)";
+
+    const flap=document.getElementById("flap");
+    const letter=document.getElementById("letter");
+    const msg=document.getElementById("message");
+
+    flap.style.transform="rotateX(180deg)";
+    letter.style.transform="translateY(-40px)";
+
+    msg.innerHTML="";
+    const text=`Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla. Butt im suree that it was the best thing in my life.... Plus one ill mukathh polum nokkatha namml ipoo nalla close aay 🥹🥹🥹.... Ente life ill ninte importance nthanenn ninnk ariyilla butt nee onn arinjoo u made my lifee colorfull🥹... I can proudly say thatt ennik nth preshnm indelum koode nikkn nee indenn bcozzz nee athh prove cheythh😭😭.... Nee nthh aadhyee ithreem nallathayee😭.... Ninnk theran vere onnum nte kayyil thalkalathekk illa soo ithh vechh adjust cheyy😭.. Ik ith korch cringe ahnenn and its not muchh butt i will make it up to you one day 💯... 18 vayas okke aaya kelavi aayalumm nee pazhee polee thanne iriknee😭 matured aavall.... U should be childish 🥹🥹... Ik one day namml piriyendii verum enn. Butt till that day i hope we get to make some great memories together 😭😭.... Ennik edk edk choriyann ollaa aal poya njn pinna aaree choriyumm😭😭... Anywayy neee happy aayitt irikkaa.... Life is full of ups and downs enn aahnloo... Butt letss try to make it full of ups 💪🏻💪🏻... Onnudii happy birthday 🥹🥹🫶🏻🫂`;
+
+    let i=0;
+    function type(){
+        if(i<text.length){
+            msg.innerHTML+=text.charAt(i);
+            i++;
+            setTimeout(type,40);
+        }
+    }
+    type();
 }
 
 /* Smooth Close */
@@ -295,11 +304,11 @@ document.getElementById("modal").addEventListener("click",function(){
 
 /* Cake */
 function startCake(){
-    const cakeMusic=document.getElementById("cakeMusic");
-    cakeMusic.play().catch(()=>{});
+    document.getElementById("cakeMusic").play().catch(()=>{});
 }
 
 </script>
 
 </body>
 </html>
+
