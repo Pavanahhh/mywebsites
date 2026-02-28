@@ -14,7 +14,7 @@ body{
     color:white;
     min-height:100vh;
     background:radial-gradient(circle at bottom,#0d1b2a,#000814 70%);
-    transition:filter 0.8s ease, opacity 0.8s ease;
+    transition:0.8s;
 }
 
 /* Romantic pulse */
@@ -70,29 +70,23 @@ body.romantic{
     }
 }
 
-/* Sparkles */
-.sparkle{
+/* Spark */
+.spark{
     position:fixed;
-    width:6px;
-    height:6px;
+    width:8px;height:8px;
     background:white;
     border-radius:50%;
-    opacity:0.8;
     pointer-events:none;
-    animation:sparkFloat 4s linear forwards;
+    animation:sparkle 1s linear forwards;
 }
-@keyframes sparkFloat{
-    to{
-        transform:translateY(-100px);
-        opacity:0;
-    }
+@keyframes sparkle{
+    to{transform:scale(0);opacity:0;}
 }
 
 .container{
     position:relative;
     z-index:5;
     top:18vh;
-    padding:20px;
 }
 
 h1{
@@ -112,10 +106,8 @@ button{
     background:#ff4da6;
     color:white;
     cursor:pointer;
-    transition:0.3s;
     margin:10px;
 }
-button:hover{ transform:scale(1.1); }
 
 /* Modal */
 .modal{
@@ -127,13 +119,8 @@ button:hover{ transform:scale(1.1); }
     align-items:center;
     justify-content:center;
     z-index:20;
-    opacity:0;
-    transition:opacity 0.8s ease;
 }
-.modal.show{
-    display:flex;
-    opacity:1;
-}
+.modal.show{display:flex;}
 
 /* Envelope */
 .envelope-wrapper{
@@ -142,17 +129,14 @@ button:hover{ transform:scale(1.1); }
     height:220px;
     cursor:pointer;
 }
-
 .envelope{
-    position:relative;
     width:100%;
     height:100%;
     background:#ff4da6;
     border-radius:10px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.6);
     overflow:hidden;
+    position:relative;
 }
-
 .flap{
     position:absolute;
     width:100%;
@@ -160,28 +144,56 @@ button:hover{ transform:scale(1.1); }
     background:#ff3385;
     clip-path:polygon(0 0, 50% 60%, 100% 0);
     transform-origin:top;
-    transition:transform 1s ease;
-    z-index:3;
+    transition:1s;
 }
-
 .letter{
     position:absolute;
     bottom:0;
     left:5%;
     width:90%;
     height:200px;
-    border-radius:10px;
-    padding:20px;
-    transform:translateY(100%);
-    transition:transform 1s ease;
-    overflow-y:auto;
     background:white;
+    transform:translateY(100%);
+    transition:1s;
+    padding:15px;
+    overflow:auto;
 }
+.letter-content{color:#333;font-size:14px;}
 
-.letter-content{
-    color:#333;
-    font-size:15px;
-    line-height:1.6;
+/* Cake */
+.cake-container{
+    display:none;
+    position:fixed;
+    bottom:10vh;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+}
+.cake{
+    position:relative;
+    width:240px;
+    height:140px;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
+    border-radius:20px;
+}
+.slice-left,.slice-right{
+    position:absolute;
+    width:120px;
+    height:140px;
+    background:inherit;
+    top:0;
+    transition:1s;
+}
+.slice-left{left:0;border-right:2px solid white;}
+.slice-right{right:0;border-left:2px solid white;}
+.knife{
+    position:absolute;
+    width:6px;
+    height:170px;
+    background:silver;
+    left:117px;
+    top:-200px;
+    transition:1s;
 }
 
 </style>
@@ -192,20 +204,30 @@ button:hover{ transform:scale(1.1); }
 <div class="moon"></div>
 
 <div class="container">
-    <h1>Happy Birthday Aadhyeeeee 🌙💖</h1>
-    <button onclick="showEnvelope()">LETTER FOR YOU💌</button>
-    <button onclick="startCake()">CAKE🎂</button>
+<h1>Happy Birthday Aadhyeeeee 🌙💖</h1>
+<button onclick="showEnvelope()">LETTER FOR YOU💌</button>
+<button onclick="cutCake()">CAKE🎂</button>
 </div>
 
+<!-- Envelope -->
 <div class="modal" id="modal">
-  <div class="envelope-wrapper" onclick="openEnvelope(event)">
-    <div class="envelope">
-      <div class="flap" id="flap"></div>
-      <div class="letter" id="letter">
-        <div class="letter-content" id="message"></div>
-      </div>
-    </div>
-  </div>
+<div class="envelope-wrapper" onclick="openEnvelope(event)">
+<div class="envelope">
+<div class="flap" id="flap"></div>
+<div class="letter" id="letter">
+<div class="letter-content" id="message"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Cake -->
+<div class="cake-container" id="cakeBox">
+<div class="cake">
+<div class="slice-left" id="leftSlice"></div>
+<div class="slice-right" id="rightSlice"></div>
+<div class="knife" id="knife"></div>
+</div>
 </div>
 
 <audio id="letterMusic" loop>
@@ -220,95 +242,93 @@ button:hover{ transform:scale(1.1); }
 
 /* Stars */
 for(let i=0;i<150;i++){
-    const star=document.createElement("div");
-    star.classList.add("star");
-    star.style.width=star.style.height=Math.random()*3+"px";
-    star.style.top=Math.random()*100+"vh";
-    star.style.left=Math.random()*100+"vw";
-    document.body.appendChild(star);
+const star=document.createElement("div");
+star.classList.add("star");
+star.style.width=star.style.height=Math.random()*3+"px";
+star.style.top=Math.random()*100+"vh";
+star.style.left=Math.random()*100+"vw";
+document.body.appendChild(star);
 }
 
 /* Hearts */
 let heartInterval;
 function startHearts(){
-    heartInterval=setInterval(()=>{
-        const heart=document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML="💖";
-        heart.style.fontSize=(15+Math.random()*25)+"px";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.animationDuration=(4+Math.random()*4)+"s";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),8000);
-    },250);
+heartInterval=setInterval(()=>{
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💖";
+heart.style.fontSize=(15+Math.random()*25)+"px";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),8000);
+},250);
 }
-function stopHearts(){ clearInterval(heartInterval); }
+function stopHearts(){clearInterval(heartInterval);}
 
-/* Sparkles */
-setInterval(()=>{
-    const sp=document.createElement("div");
-    sp.classList.add("sparkle");
-    sp.style.left=Math.random()*100+"vw";
-    sp.style.top=Math.random()*100+"vh";
-    document.body.appendChild(sp);
-    setTimeout(()=>sp.remove(),4000);
-},500);
-
-/* Show Envelope */
+/* Envelope */
 function showEnvelope(){
-    document.getElementById("modal").classList.add("show");
-    document.body.classList.add("romantic");
-    const music=document.getElementById("letterMusic");
-    music.volume=0.4;
-    music.play().catch(()=>{});
-    startHearts();
+document.getElementById("modal").classList.add("show");
+document.body.classList.add("romantic");
+document.getElementById("letterMusic").play();
+startHearts();
 }
 
-/* Open Envelope + TYPE MESSAGE */
 function openEnvelope(e){
-    e.stopPropagation();
-
-    const flap=document.getElementById("flap");
-    const letter=document.getElementById("letter");
-    const msg=document.getElementById("message");
-
-    flap.style.transform="rotateX(180deg)";
-    letter.style.transform="translateY(-40px)";
-
-    msg.innerHTML="";
-    const text=`Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla. Butt im suree that it was the best thing in my life.... Plus one ill mukathh polum nokkatha namml ipoo nalla close aay 🥹🥹🥹.... Ente life ill ninte importance nthanenn ninnk ariyilla butt nee onn arinjoo u made my lifee colorfull🥹... I can proudly say thatt ennik nth preshnm indelum koode nikkn nee indenn bcozzz nee athh prove cheythh😭😭.... Nee nthh aadhyee ithreem nallathayee😭.... Ninnk theran vere onnum nte kayyil thalkalathekk illa soo ithh vechh adjust cheyy😭.. Ik ith korch cringe ahnenn and its not muchh butt i will make it up to you one day 💯... 18 vayas okke aaya kelavi aayalumm nee pazhee polee thanne iriknee😭 matured aavall.... U should be childish 🥹🥹... Ik one day namml piriyendii verum enn. Butt till that day i hope we get to make some great memories together 😭😭.... Ennik edk edk choriyann ollaa aal poya njn pinna aaree choriyumm😭😭... Anywayy neee happy aayitt irikkaa.... Life is full of ups and downs enn aahnloo... Butt letss try to make it full of ups 💪🏻💪🏻... Onnudii happy birthday 🥹🥹🫶🏻🫂`;
-
-    let i=0;
-    function type(){
-        if(i<text.length){
-            msg.innerHTML+=text.charAt(i);
-            i++;
-            setTimeout(type,40);
-        }
-    }
-    type();
+e.stopPropagation();
+document.getElementById("flap").style.transform="rotateX(180deg)";
+document.getElementById("letter").style.transform="translateY(-40px)";
+document.getElementById("message").innerHTML="Happy Birthday Aadhyeeee 🥹💖 (your full long message here)";
 }
 
-/* Smooth Close */
+/* Close envelope */
 document.getElementById("modal").addEventListener("click",function(){
-    document.getElementById("flap").style.transform="rotateX(0deg)";
-    document.getElementById("letter").style.transform="translateY(100%)";
-
-    setTimeout(()=>{
-        document.getElementById("modal").classList.remove("show");
-        document.getElementById("letterMusic").pause();
-        document.body.classList.remove("romantic");
-        stopHearts();
-    },800);
+document.getElementById("flap").style.transform="rotateX(0deg)";
+document.getElementById("letter").style.transform="translateY(100%)";
+setTimeout(()=>{
+document.getElementById("modal").classList.remove("show");
+document.getElementById("letterMusic").pause();
+document.body.classList.remove("romantic");
+stopHearts();
+},800);
 });
 
 /* Cake */
-function startCake(){
-    document.getElementById("cakeMusic").play().catch(()=>{});
+function cutCake(){
+const cakeBox=document.getElementById("cakeBox");
+const knife=document.getElementById("knife");
+const left=document.getElementById("leftSlice");
+const right=document.getElementById("rightSlice");
+
+cakeBox.style.display="block";
+document.getElementById("cakeMusic").play();
+
+knife.style.top="0px";
+setTimeout(()=>{
+left.style.transform="translateX(-40px)";
+right.style.transform="translateX(40px)";
+burst();
+},1200);
+}
+
+/* Spark burst */
+function burst(){
+for(let i=0;i<40;i++){
+const s=document.createElement("div");
+s.classList.add("spark");
+s.style.left=(window.innerWidth/2)+"px";
+s.style.top=(window.innerHeight*0.75)+"px";
+document.body.appendChild(s);
+const angle=Math.random()*360;
+const dist=Math.random()*200;
+s.style.transform=`translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px)`;
+setTimeout(()=>s.remove(),1000);
+}
 }
 
 </script>
 
 </body>
 </html>
+
 
