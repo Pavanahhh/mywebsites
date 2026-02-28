@@ -13,26 +13,38 @@ body{
     text-align:center;
     color:white;
     min-height:100vh;
-    background-image:url("image/background.jpg");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
+    background:radial-gradient(circle at bottom,#0d1b2a,#000814 70%);
     transition:1s;
 }
 
 /* Romantic Mode */
 body.romantic{
-    filter:brightness(0.9);
+    background:radial-gradient(circle at bottom,#2b0a3d,#000000 70%);
 }
 
-/* Dark overlay for readability */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.4);
-    z-index:-1;
+/* Moon */
+.moon{
+    position:absolute;
+    top:60px;
+    right:60px;
+    width:120px;
+    height:120px;
+    background:radial-gradient(circle at 30% 30%, #fff, #ddd 60%, #bbb);
+    border-radius:50%;
+    box-shadow:0 0 40px #ffffffaa, 0 0 90px #ffffff55;
+}
+
+/* Stars */
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0.8;
+    animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
 }
 
 /* Hearts */
@@ -129,7 +141,7 @@ button{
 }
 .letter-content{color:#333;font-size:14px;line-height:1.5;}
 
-/* 🎂 Cake */
+/* 🎂 Creamy Cake Upgrade */
 .cake-container{
     display:none;
     position:fixed;
@@ -148,6 +160,7 @@ button{
     box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
+/* Cream Top */
 .cake::before{
     content:"";
     position:absolute;
@@ -160,6 +173,7 @@ button{
     box-shadow:0 8px 15px rgba(0,0,0,0.3);
 }
 
+/* Cream drip */
 .cake::after{
     content:"";
     position:absolute;
@@ -192,6 +206,7 @@ button{
     transition:1s ease;
 }
 
+/* Candles */
 .candle{
     position:absolute;
     width:10px;
@@ -216,10 +231,13 @@ button{
     from{transform:translateX(-50%) scale(1);}
     to{transform:translateX(-50%) scale(1.2);}
 }
+
 </style>
 </head>
 
 <body>
+
+<div class="moon"></div>
 
 <div class="container">
 <h1>Happy Birthday Aadhyeeeee 🌙💖</h1>
@@ -255,8 +273,19 @@ button{
 
 <script>
 
+/* Stars */
+for(let i=0;i<150;i++){
+const star=document.createElement("div");
+star.classList.add("star");
+star.style.width=star.style.height=Math.random()*3+"px";
+star.style.top=Math.random()*100+"vh";
+star.style.left=Math.random()*100+"vw";
+document.body.appendChild(star);
+}
+
+/* Envelope */
 let opened=false;
-const text="Happy Birthday Aadhyeeee🥹... (your full message stays same here)";
+const text="Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla. Butt im suree that it was the best thing in my life.... Plus one ill mukathh polum nokkatha namml ipoo nalla close aay 🥹🥹🥹.... Ente life ill ninte importance nthanenn ninnk ariyilla butt nee onn arinjoo u made my lifee colorfull🥹... I can proudly say thatt ennik nth preshnm indelum koode nikkn nee indenn bcozzz nee athh prove cheythh😭😭.... Nee nthh aadhyee ithreem nallathayee😭.... Ninnk theran vere onnum nte kayyil thalkalathekk illa soo ithh vechh adjust cheyy😭.. Ik its not muchh butt i will make it up to you ond day 💯... 18 vayas okke aaya kelavi aayalumm nee pazhee polee thanne iriknee😭 matured aavall.... U should be childish 🥹🥹... Ik one day namml piriyendii verum enn. Butt till that day i hope we get to make some great memories together 😭😭.... Ennik edk edk choriyann ollaa aal poya njn pinna aaree choriyumm😭😭... Anywayy neee happy aayitt irikkaa.... Life is full of ups and downs enn aahnloo... Butt letss try to make it full of ups 💪🏻💪🏻... Onnudii happy birthday 🥹🥹🥹... Luv uu mannhhh🥹🫶🏻🫂";
 
 function showEnvelope(){
 document.getElementById("modal").classList.add("show");
@@ -296,6 +325,7 @@ if(i>=text.length) clearInterval(interval);
 },speed);
 }
 
+/* Hearts */
 function heartRain(){
 for(let i=0;i<25;i++){
 let heart=document.createElement("div");
@@ -308,6 +338,7 @@ setTimeout(()=>heart.remove(),5000);
 }
 }
 
+/* Cake */
 function cutCake(){
 const cakeBox=document.getElementById("cakeBox");
 const knife=document.getElementById("knife");
@@ -329,6 +360,7 @@ right.style.transform="translateX(50px)";
 
 </body>
 </html>
+
 
 
 
