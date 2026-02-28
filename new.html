@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday Aadhya 🌙💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    overflow-x:hidden;
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    color:white;
+    min-height:100vh;
+    background:radial-gradient(circle at bottom,#0d1b2a,#000814 70%);
+}
+
+/* 🌙 Moon */
+.moon{
+    position:absolute;
+    top:60px;
+    right:60px;
+    width:120px;
+    height:120px;
+    background:radial-gradient(circle at 30% 30%, #fff, #ddd 60%, #bbb);
+    border-radius:50%;
+    box-shadow:0 0 40px #ffffffaa, 0 0 90px #ffffff55;
+    animation:moonGlow 4s infinite alternate;
+}
+@keyframes moonGlow{
+    from{box-shadow:0 0 30px #fff;}
+    to{box-shadow:0 0 70px #fff;}
+}
+
+/* Stars */
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0.8;
+    animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+.container{
+    position:relative;
+    z-index:5;
+    top:18vh;
+    padding:20px;
+}
+
+h1{
+    font-size:40px;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 10px #fff;}
+    to{text-shadow:0 0 30px #ff4da6;}
+}
+
+button{
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    background:#ff4da6;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+    margin:10px;
+}
+button:hover{ transform:scale(1.1); }
+
+/* 💌 Modal */
+.modal{
+    position:fixed;
+    inset:0;
+    backdrop-filter:blur(8px);
+    background:rgba(0,0,0,0.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:20;
+}
+
+/* 💌 Envelope */
+.envelope-wrapper{
+    position:relative;
+    width:320px;
+    height:220px;
+    cursor:pointer;
+}
+
+.envelope{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:#ff4da6;
+    border-radius:10px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.6);
+    overflow:hidden;
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#ff3385;
+    clip-path:polygon(0 0, 50% 60%, 100% 0);
+    transform-origin:top;
+    transition:transform 1s ease;
+    z-index:3;
+}
+
+/* 📜 Paper Texture */
+.letter{
+    position:absolute;
+    bottom:0;
+    left:5%;
+    width:90%;
+    height:200px;
+    border-radius:10px;
+    padding:20px;
+    transform:translateY(100%);
+    transition:transform 1s ease;
+    overflow-y:auto;
+
+    background:
+    linear-gradient(rgba(255,255,255,0.95),rgba(255,255,255,0.95)),
+    repeating-linear-gradient(
+        45deg,
+        rgba(0,0,0,0.02),
+        rgba(0,0,0,0.02) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    box-shadow:inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.letter-content{
+    color:#333;
+    font-size:15px;
+    line-height:1.6;
+}
+
+/* 🎂 Cake */
+.cake-container{
+    display:none;
+    position:fixed;
+    bottom:15vh;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+}
+
+.cake{
+    position:relative;
+    width:240px;
+    height:140px;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.6);
+}
+
+.cake::before{
+    content:"";
+    position:absolute;
+    top:-30px;
+    left:0;
+    width:100%;
+    height:60px;
+    background:linear-gradient(to bottom,#fff,#ffe6f2);
+    border-radius:50%;
+}
+
+.slice-left,.slice-right{
+    position:absolute;
+    width:120px;
+    height:140px;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
+    top:0;
+    transition:1s ease;
+}
+.slice-left{left:0;border-right:2px solid white;}
+.slice-right{right:0;border-left:2px solid white;}
+
+.knife{
+    position:absolute;
+    width:6px;
+    height:170px;
+    background:silver;
+    left:117px;
+    top:-200px;
+    transition:1s ease;
+}
+
+/* Candles */
+.candle{
+    position:absolute;
+    width:10px;
+    height:35px;
+    background:#fff;
+    top:-65px;
+    border-radius:3px;
+}
+.candle::after{
+    content:"";
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:8px;
+    height:12px;
+    background:orange;
+    border-radius:50%;
+    animation:flicker 0.3s infinite alternate;
+}
+@keyframes flicker{
+    from{transform:translateX(-50%) scale(1);}
+    to{transform:translateX(-50%) scale(1.2);}
+}
+
+/* Spark */
+.spark{
+    position:fixed;
+    width:8px;height:8px;
+    background:white;
+    border-radius:50%;
+    pointer-events:none;
+    animation:sparkle 0.8s linear forwards;
+}
+@keyframes sparkle{
+    to{transform:scale(0);opacity:0;}
+}
+
+@media(max-width:768px){
+    h1{font-size:26px;}
+    button{font-size:15px;padding:12px 18px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<div class="container">
+    <h1>Happy Birthday Aadhyeeeee 🌙💖</h1>
+    <button onclick="startMusic(); showEnvelope()">LETTER FOR YOU💌</button>
+    <button onclick="startMusic(); cutCake()">CAKE🎂</button>
+</div>
+
+<!-- 💌 Envelope Modal -->
+<div class="modal" id="modal">
+  <div class="envelope-wrapper" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="flap" id="flap"></div>
+      <div class="letter" id="letter">
+        <div class="letter-content" id="message"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🎂 Cake -->
+<div class="cake-container" id="cakeBox">
+    <div class="cake">
+        <div class="slice-left" id="leftSlice"></div>
+        <div class="slice-right" id="rightSlice"></div>
+        <div class="knife" id="knife"></div>
+        <div class="candle" style="left:40px;"></div>
+        <div class="candle" style="left:110px;"></div>
+        <div class="candle" style="left:180px;"></div>
+    </div>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a0f0c7d3.mp3?filename=soft-piano-ambient-110624.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Stars */
+for(let i=0;i<150;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    star.style.width=star.style.height=Math.random()*3+"px";
+    star.style.top=Math.random()*100+"vh";
+    star.style.left=Math.random()*100+"vw";
+    document.body.appendChild(star);
+}
+
+/* Music */
+const music=document.getElementById("bgMusic");
+music.volume=0;
+function startMusic(){
+    music.play().catch(()=>{});
+    let fade=setInterval(()=>{
+        if(music.volume<0.4){ music.volume+=0.02; }
+        else{ clearInterval(fade); }
+    },200);
+}
+
+/* Envelope */
+function showEnvelope(){
+    document.getElementById("modal").style.display="flex";
+}
+
+function openEnvelope(){
+    const flap=document.getElementById("flap");
+    const letter=document.getElementById("letter");
+    const msg=document.getElementById("message");
+
+    flap.style.transform="rotateX(180deg)";
+    letter.style.transform="translateY(-40px)";
+
+    msg.innerHTML="";
+    const text="Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla. Butt im suree that it was the best thing in my life.... Plus one ill mukathh polum nokkatha namml ipoo nalla close aay 🥹🥹🥹.... Ente life ill ninte importance nthanenn ninnk ariyilla butt nee onn arinjoo u made my lifee colorfull🥹... I can proudly say thatt ennik nth preshnm indelum koode nikkn nee indenn bcozzz nee athh prove cheythh😭😭.... Nee nthh aadhyee ithreem nallathayee😭.... Ninnk theran vere onnum nte kayyil thalkalathekk illa soo ithh vechh adjust cheyy😭.. Ik its not muchh butt i will make it up to you ond day 💯... 18 vayas okke aaya kelavi aayalumm nee pazhee polee thanne iriknee😭 matured aavall.... U should be childish 🥹🥹... Ik one day namml piriyendii verum enn. Butt till that day i hope we get to make some great memories together 😭😭.... Ennik edk edk choriyann ollaa aal poya njn pinna aaree choriyumm😭😭... Anywayy neee happy aayitt irikkaa.... Life is full of ups and downs enn aahnloo... Butt letss try to make it full of ups 💪🏻💪🏻... Onnudii happy birthday 🥹🥹🥹... Luv uu mannhhh🥹🫶🏻🫂";
+
+    let i=0;
+    function type(){
+        if(i<text.length){
+            msg.innerHTML+=text.charAt(i);
+            msg.scrollTop=msg.scrollHeight;
+            i++;
+            setTimeout(type,100);
+        }
+    }
+    type();
+}
+
+/* Cake */
+function cutCake(){
+    const cakeBox=document.getElementById("cakeBox");
+    const knife=document.getElementById("knife");
+    const left=document.getElementById("leftSlice");
+    const right=document.getElementById("rightSlice");
+
+    cakeBox.style.display="block";
+    knife.style.top="-200px";
+    left.style.transform="translateX(0)";
+    right.style.transform="translateX(0)";
+
+    setTimeout(()=>knife.style.top="0px",300);
+    setTimeout(()=>{
+        left.style.transform="translateX(-40px)";
+        right.style.transform="translateX(40px)";
+    },1300);
+}
+
+/* Spark */
+function createSpark(x,y){
+    const spark=document.createElement("div");
+    spark.classList.add("spark");
+    spark.style.left=x+"px";
+    spark.style.top=y+"px";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),800);
+}
+document.addEventListener("mousemove",e=>createSpark(e.clientX,e.clientY));
+document.addEventListener("touchmove",e=>createSpark(e.touches[0].clientX,e.touches[0].clientY));
+
+</script>
+</body>
+</html>
