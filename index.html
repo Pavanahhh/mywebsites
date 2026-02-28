@@ -17,15 +17,6 @@ body{
     transition:0.8s;
 }
 
-/* Romantic pulse */
-body.romantic{
-    animation:heartbeat 2.5s infinite;
-}
-@keyframes heartbeat{
-    0%,100%{filter:brightness(1);}
-    50%{filter:brightness(1.1);}
-}
-
 /* Moon */
 .moon{
     position:absolute;
@@ -36,11 +27,6 @@ body.romantic{
     background:radial-gradient(circle at 30% 30%, #fff, #ddd 60%, #bbb);
     border-radius:50%;
     box-shadow:0 0 40px #ffffffaa, 0 0 90px #ffffff55;
-    animation:moonGlow 4s infinite alternate;
-}
-@keyframes moonGlow{
-    from{box-shadow:0 0 30px #fff;}
-    to{box-shadow:0 0 70px #fff;}
 }
 
 /* Stars */
@@ -70,19 +56,7 @@ body.romantic{
     }
 }
 
-/* Spark */
-.spark{
-    position:fixed;
-    width:8px;height:8px;
-    background:white;
-    border-radius:50%;
-    pointer-events:none;
-    animation:sparkle 1s linear forwards;
-}
-@keyframes sparkle{
-    to{transform:scale(0);opacity:0;}
-}
-
+/* Container */
 .container{
     position:relative;
     z-index:5;
@@ -160,32 +134,49 @@ button{
 }
 .letter-content{color:#333;font-size:14px;}
 
-/* Cake */
+/* 🎂 ORIGINAL CAKE DESIGN */
 .cake-container{
     display:none;
     position:fixed;
-    bottom:10vh;
+    bottom:15vh;
     left:50%;
     transform:translateX(-50%);
     z-index:10;
 }
+
 .cake{
     position:relative;
     width:240px;
     height:140px;
     background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
     border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.6);
 }
+
+.cake::before{
+    content:"";
+    position:absolute;
+    top:-30px;
+    left:0;
+    width:100%;
+    height:60px;
+    background:linear-gradient(to bottom,#fff,#ffe6f2);
+    border-radius:50%;
+}
+
+/* Slices */
 .slice-left,.slice-right{
     position:absolute;
     width:120px;
     height:140px;
-    background:inherit;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
     top:0;
-    transition:1s;
+    transition:1s ease;
 }
 .slice-left{left:0;border-right:2px solid white;}
 .slice-right{right:0;border-left:2px solid white;}
+
+/* Knife */
 .knife{
     position:absolute;
     width:6px;
@@ -193,7 +184,33 @@ button{
     background:silver;
     left:117px;
     top:-200px;
-    transition:1s;
+    transition:1s ease;
+}
+
+/* Candles */
+.candle{
+    position:absolute;
+    width:10px;
+    height:35px;
+    background:#fff;
+    top:-65px;
+    border-radius:3px;
+}
+.candle::after{
+    content:"";
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:8px;
+    height:12px;
+    background:orange;
+    border-radius:50%;
+    animation:flicker 0.3s infinite alternate;
+}
+@keyframes flicker{
+    from{transform:translateX(-50%) scale(1);}
+    to{transform:translateX(-50%) scale(1.2);}
 }
 
 </style>
@@ -209,30 +226,30 @@ button{
 <button onclick="cutCake()">CAKE🎂</button>
 </div>
 
-<!-- Envelope -->
 <div class="modal" id="modal">
 <div class="envelope-wrapper" onclick="openEnvelope(event)">
 <div class="envelope">
 <div class="flap" id="flap"></div>
 <div class="letter" id="letter">
-<div class="letter-content" id="message"></div>
+<div class="letter-content" id="message">
+Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla. Butt im suree that it was the best thing in my life.... Plus one ill mukathh polum nokkatha namml ipoo nalla close aay 🥹🥹🥹.... Ente life ill ninte importance nthanenn ninnk ariyilla butt nee onn arinjoo u made my lifee colorfull🥹... I can proudly say thatt ennik nth preshnm indelum koode nikkn nee indenn bcozzz nee athh prove cheythh😭😭.... Nee nthh aadhyee ithreem nallathayee😭.... Ninnk theran vere onnum nte kayyil thalkalathekk illa soo ithh vechh adjust cheyy😭.. Ik its not muchh butt i will make it up to you ond day 💯... 18 vayas okke aaya kelavi aayalumm nee pazhee polee thanne iriknee😭 matured aavall.... U should be childish 🥹🥹... Ik one day namml piriyendii verum enn. Butt till that day i hope we get to make some great memories together 😭😭.... Ennik edk edk choriyann ollaa aal poya njn pinna aaree choriyumm😭😭... Anywayy neee happy aayitt irikkaa.... Life is full of ups and downs enn aahnloo... Butt letss try to make it full of ups 💪🏻💪🏻... Onnudii happy birthday 🥹🥹🥹... Luv uu mannhhh🥹🫶🏻🫂
+</div>
 </div>
 </div>
 </div>
 </div>
 
-<!-- Cake -->
+<!-- 🎂 Cake -->
 <div class="cake-container" id="cakeBox">
 <div class="cake">
 <div class="slice-left" id="leftSlice"></div>
 <div class="slice-right" id="rightSlice"></div>
 <div class="knife" id="knife"></div>
+<div class="candle" style="left:40px;"></div>
+<div class="candle" style="left:110px;"></div>
+<div class="candle" style="left:180px;"></div>
 </div>
 </div>
-
-<audio id="letterMusic" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a0f0c7d3.mp3?filename=soft-piano-ambient-110624.mp3">
-</audio>
 
 <audio id="cakeMusic">
 <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_0f5df6c4a2.mp3?filename=happy-birthday-112194.mp3">
@@ -250,50 +267,7 @@ star.style.left=Math.random()*100+"vw";
 document.body.appendChild(star);
 }
 
-/* Hearts */
-let heartInterval;
-function startHearts(){
-heartInterval=setInterval(()=>{
-const heart=document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="💖";
-heart.style.fontSize=(15+Math.random()*25)+"px";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),8000);
-},250);
-}
-function stopHearts(){clearInterval(heartInterval);}
-
-/* Envelope */
-function showEnvelope(){
-document.getElementById("modal").classList.add("show");
-document.body.classList.add("romantic");
-document.getElementById("letterMusic").play();
-startHearts();
-}
-
-function openEnvelope(e){
-e.stopPropagation();
-document.getElementById("flap").style.transform="rotateX(180deg)";
-document.getElementById("letter").style.transform="translateY(-40px)";
-document.getElementById("message").innerHTML="Happy Birthday Aadhyeeee 🥹💖 (your full long message here)";
-}
-
-/* Close envelope */
-document.getElementById("modal").addEventListener("click",function(){
-document.getElementById("flap").style.transform="rotateX(0deg)";
-document.getElementById("letter").style.transform="translateY(100%)";
-setTimeout(()=>{
-document.getElementById("modal").classList.remove("show");
-document.getElementById("letterMusic").pause();
-document.body.classList.remove("romantic");
-stopHearts();
-},800);
-});
-
-/* Cake */
+/* Cake Animation */
 function cutCake(){
 const cakeBox=document.getElementById("cakeBox");
 const knife=document.getElementById("knife");
@@ -304,31 +278,17 @@ cakeBox.style.display="block";
 document.getElementById("cakeMusic").play();
 
 knife.style.top="0px";
+
 setTimeout(()=>{
 left.style.transform="translateX(-40px)";
 right.style.transform="translateX(40px)";
-burst();
-},1200);
-}
-
-/* Spark burst */
-function burst(){
-for(let i=0;i<40;i++){
-const s=document.createElement("div");
-s.classList.add("spark");
-s.style.left=(window.innerWidth/2)+"px";
-s.style.top=(window.innerHeight*0.75)+"px";
-document.body.appendChild(s);
-const angle=Math.random()*360;
-const dist=Math.random()*200;
-s.style.transform=`translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px)`;
-setTimeout(()=>s.remove(),1000);
-}
+},1300);
 }
 
 </script>
 
 </body>
 </html>
+
 
 
