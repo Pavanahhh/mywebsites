@@ -13,14 +13,28 @@ body{
     text-align:center;
     color:white;
     min-height:100vh;
-    background:radial-gradient(circle at bottom,#0d1b2a,#000814 70%);
+
+    /* 💖 BACKGROUND IMAGE */
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+        url("background.jpg.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
     transition:1s;
 }
 
+/* Romantic mode darker */
 body.romantic{
-    background:radial-gradient(circle at bottom,#2b0a3d,#000000 70%);
+    background:
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+        url("background.jpg.jpeg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 }
 
+/* Moon */
 .moon{
     position:absolute;
     top:60px;
@@ -32,6 +46,7 @@ body.romantic{
     box-shadow:0 0 40px #ffffffaa, 0 0 90px #ffffff55;
 }
 
+/* Stars */
 .star{
     position:absolute;
     background:white;
@@ -44,6 +59,7 @@ body.romantic{
     to{opacity:1;}
 }
 
+/* Hearts */
 .heart{
     position:fixed;
     top:-20px;
@@ -57,6 +73,7 @@ body.romantic{
     }
 }
 
+/* Container */
 .container{
     position:relative;
     z-index:5;
@@ -83,6 +100,7 @@ button{
     margin:10px;
 }
 
+/* Modal */
 .modal{
     position:fixed;
     inset:0;
@@ -95,13 +113,13 @@ button{
 }
 .modal.show{display:flex;}
 
+/* Envelope */
 .envelope-wrapper{
     position:relative;
     width:340px;
     height:230px;
     cursor:pointer;
 }
-
 .envelope{
     width:100%;
     height:100%;
@@ -110,7 +128,6 @@ button{
     overflow:hidden;
     position:relative;
 }
-
 .flap{
     position:absolute;
     width:100%;
@@ -120,13 +137,12 @@ button{
     transform-origin:top;
     transition:1s;
 }
-
 .letter{
     position:absolute;
     bottom:0;
     left:5%;
     width:90%;
-    height:300px;
+    height:250px;
     background:#fffdf7;
     transform:translateY(100%);
     transition:1s;
@@ -135,19 +151,43 @@ button{
     border-radius:8px;
     box-shadow:0 10px 20px rgba(0,0,0,0.4);
 }
+.letter-content{color:#333;font-size:14px;line-height:1.5;}
 
-/* 💖 PHOTO STYLE */
-.letter img{
-    width:100%;
-    border-radius:12px;
-    margin-bottom:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+/* 🎂 Cake */
+.cake-container{
+    display:none;
+    position:fixed;
+    bottom:15vh;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
 }
-
-.letter-content{
-    color:#333;
-    font-size:14px;
-    line-height:1.5;
+.cake{
+    position:relative;
+    width:260px;
+    height:150px;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+.slice-left,.slice-right{
+    position:absolute;
+    width:130px;
+    height:150px;
+    background:linear-gradient(to bottom,#ff9ecf,#ff69b4);
+    top:0;
+    transition:1s ease;
+}
+.slice-left{left:0;border-right:2px solid white;}
+.slice-right{right:0;border-left:2px solid white;}
+.knife{
+    position:absolute;
+    width:6px;
+    height:180px;
+    background:silver;
+    left:127px;
+    top:-200px;
+    transition:1s ease;
 }
 
 </style>
@@ -160,25 +200,25 @@ button{
 <div class="container">
 <h1>Happy Birthday Aadhyeeeee 🌙💖</h1>
 <button onclick="showEnvelope()">LETTER FOR YOU 💌</button>
+<button onclick="cutCake()">CAKE 🎂</button>
 </div>
 
 <div class="modal" id="modal" onclick="closeEnvelope(event)">
 <div class="envelope-wrapper" id="envWrap">
 <div class="envelope">
 <div class="flap" id="flap"></div>
-
 <div class="letter" id="letter">
-<div class="letter-content">
-
-<!-- 💖 ADD HER PHOTO HERE -->
-<img src="background.jpg.jpeg">
-
-<div id="message"></div>
-
+<div class="letter-content" id="message"></div>
+</div>
+</div>
 </div>
 </div>
 
-</div>
+<div class="cake-container" id="cakeBox">
+<div class="cake">
+<div class="slice-left" id="leftSlice"></div>
+<div class="slice-right" id="rightSlice"></div>
+<div class="knife" id="knife"></div>
 </div>
 </div>
 
@@ -196,7 +236,7 @@ document.body.appendChild(star);
 
 let opened=false;
 
-const text="Happy Birthday Aadhyeeee🥹... Namml ngnee company aayennoo nthinayennoo ennik ariyilla... (your full message here)";
+const text="Happy Birthday Aadhyeeee🥹... (your full message here)";
 
 function showEnvelope(){
 document.getElementById("modal").classList.add("show");
@@ -215,10 +255,8 @@ document.getElementById("envWrap").onclick=function(){
 if(opened) return;
 opened=true;
 document.body.classList.add("romantic");
-
 document.getElementById("flap").style.transform="rotateX(180deg)";
 document.getElementById("letter").style.transform="translateY(0)";
-
 typeLetter();
 heartRain();
 };
@@ -247,10 +285,26 @@ setTimeout(()=>heart.remove(),5000);
 }
 }
 
+function cutCake(){
+const cakeBox=document.getElementById("cakeBox");
+const knife=document.getElementById("knife");
+const left=document.getElementById("leftSlice");
+const right=document.getElementById("rightSlice");
+
+cakeBox.style.display="block";
+knife.style.top="0px";
+
+setTimeout(()=>{
+left.style.transform="translateX(-50px)";
+right.style.transform="translateX(50px)";
+},1300);
+}
+
 </script>
 
 </body>
 </html>
+
 
 
 
