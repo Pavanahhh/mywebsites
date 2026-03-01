@@ -6,47 +6,21 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
     overflow-x:hidden;
     font-family:'Poppins',sans-serif;
     text-align:center;
     color:black;
     min-height:100vh;
-    background:radial-gradient(circle at bottom,#0d1b2a,#000814 70%);
-    transition:1s;
 
-    /* 💖 Background Image 95% */
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
-        url("background.jpg.jpeg");
-    background-size:98%;
+    background:url("background.jpg.jpeg");
+    background-size:90%;
     background-repeat:no-repeat;
     background-position:center;
     background-attachment:fixed;
-    transition:1s;
 }
 
 
-
-/* Romantic Mode */
-body.romantic{
-    background:radial-gradient(circle at bottom,#2b0a3d,#000000 70%);
-}
-
-
-/* Stars */
-.star{
-    position:absolute;
-    background:white;
-    border-radius:50%;
-    opacity:0.8;
-    animation:twinkle 2s infinite alternate;
-}
-@keyframes twinkle{
-    from{opacity:0.3;}
-    to{opacity:1;}
-}
 
 /* Hearts */
 .heart{
@@ -316,7 +290,7 @@ heartRain();
 
 function typeLetter(){
 let i=0;
-let speed=100; 
+let speed=110; 
 const msg=document.getElementById("message");
 msg.innerHTML="";
 let interval=setInterval(()=>{
@@ -361,6 +335,7 @@ right.style.transform="translateX(50px)";
 
 </body>
 </html>
+
 
 
 
