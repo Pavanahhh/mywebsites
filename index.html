@@ -14,22 +14,24 @@ body{
     color:white;
     min-height:100vh;
 
-    /* 💖 BACKGROUND IMAGE */
+    /* 💖 Background Image 90% */
     background:
         linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
         url("background.jpg.jpeg");
-    background-size:cover;
+    background-size:90%;
+    background-repeat:no-repeat;
     background-position:center;
     background-attachment:fixed;
     transition:1s;
 }
 
-/* Romantic mode darker */
+/* Romantic Mode */
 body.romantic{
     background:
         linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
         url("background.jpg.jpeg");
-    background-size:cover;
+    background-size:90%;
+    background-repeat:no-repeat;
     background-position:center;
     background-attachment:fixed;
 }
@@ -236,7 +238,7 @@ document.body.appendChild(star);
 
 let opened=false;
 
-const text="Happy Birthday Aadhyeeee🥹... (your full message here)";
+const text="Happy Birthday Aadhyeeee🥹... (paste your full message here)";
 
 function showEnvelope(){
 document.getElementById("modal").classList.add("show");
@@ -304,6 +306,7 @@ right.style.transform="translateX(50px)";
 
 </body>
 </html>
+
 
 
 
